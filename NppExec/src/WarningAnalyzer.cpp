@@ -30,7 +30,7 @@ static bool is_num_str(const TCHAR* s);
 
 const tregex CWarningAnalyzer::m_rgxFindFilename = tregex( _T( "(?:(([a-zA-Z]:[\\\\/]|\\.)[^.]*\\.[^:\"\\(\\s]{1,8})|(^\\w[^\\s:\\\\/]*\\.\\w{1,8}))(?=[\\s:(\",oline]{1,9}[0-9]+)" ) );
 const tregex CWarningAnalyzer::m_rgxFindFileLineNo = tregex( _T( "(?:^[^0-9a-zA-Z_]+|.*line )([0-9]+).*" ) );
-const tregex CWarningAnalyzer::m_rgxFindFileLinePos = tregex( _T( ".*[^a - zA - Z]( ? : [0 - 9][, :]\\s* | [0 - 9] char[, :] )([0 - 9] + ).*" ) );
+const tregex CWarningAnalyzer::m_rgxFindFileLinePos = tregex( _T( ".*[^a-zA-Z](?:[0-9][,:]\\s*|[0-9] char[,:])([0-9]+).*" ) );
 const tregex CWarningAnalyzer::m_rgxFindErrPosIndicator = tregex( _T( "\\s+[\\x5E~]" ) );
 const tregex CWarningAnalyzer::m_rgxFindErrPosIndicatorAtStartOfLine = tregex( _T( "^[\\.\\s]+[\\x5E~]" ) );
 
@@ -429,9 +429,9 @@ bool CWarningAnalyzer::match( const TCHAR* str )
         postr4 = skip_tabspaces(postr4);
         m_nChar = _ttoi(postr4);
     }
-    else // *** START: New regex Warning/Error parser
-    {	 // *** All of the new regex Warning/Error parser is within this else block ***
-        tsmatch match;
+	else // *** START: New regex Warning/Error parser
+	{	 // *** All of the new regex Warning/Error parser is within this else block ***
+		tsmatch match;
         const tstring HeyStack = str;
         static std::map<int,int> ErrPositionIndicator;
         static tstring PreviousFileName;
